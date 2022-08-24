@@ -13,7 +13,8 @@ import { SafeAreaView, StyleSheet, View, Text, } from 'react-native';
 import { Provider, useSelector } from 'react-redux';
 import { store, RootState } from './src/app/store';
 import Main from './src/screen/Main';
-
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const App = () => {
 
@@ -21,11 +22,13 @@ const App = () => {
   // console.log(message);
 
   // console.log(reservation);
-
+  const persistor = persistStore(store)
   return (
     <Provider store={store} >
       <SafeAreaView style={styles.container}>
-        <Main/>
+        <PersistGate persistor={persistor}>
+          <Main />
+        </PersistGate>
       </SafeAreaView>
     </Provider>
   );
